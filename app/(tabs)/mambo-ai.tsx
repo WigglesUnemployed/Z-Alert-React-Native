@@ -4,7 +4,7 @@ import { IconSymbol } from '@/components/ui/icon-symbol';
 import { createAIService } from '@/utils/aiService';
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { Alert, Keyboard, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Alert, Animated, Easing, Image, Keyboard, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
 interface Message {
   id: string;
@@ -21,18 +21,7 @@ export default function MamboAIScreen() {
       isUser: false,
       timestamp: new Date(),
     },
-    {
-      id: '2',
-      text: "I can help you with various safety-related tasks, such as providing information on local emergency services, sending alerts to your contacts, and offering guidance in emergency situations. Feel free to ask me anything!",
-      isUser: false,
-      timestamp: new Date(),
-    },
-    {
-      id: '3',
-      text: "Hi Mambo. I'm exploring tha app. what can you do?",
-      isUser: true,
-      timestamp: new Date(),
-    },
+  
   ]);
   
   const [inputText, setInputText] = useState('');
@@ -122,6 +111,62 @@ export default function MamboAIScreen() {
     router.back();
   };
 
+  // Animated "Thinking" wave component
+  const ThinkingWave = ({ text = 'Thinking' }: { text?: string }) => {
+    const letters = text.split('');
+    const animatedValues = useRef(letters.map(() => new Animated.Value(0))).current;
+
+    useEffect(() => {
+      const animations = animatedValues.map((value, index) =>
+        Animated.loop(
+          Animated.sequence([
+            Animated.timing(value, {
+              toValue: 1,
+              duration: 450,
+              delay: index * 140,
+              easing: Easing.inOut(Easing.quad),
+              useNativeDriver: true,
+            }),
+            Animated.timing(value, {
+              toValue: 0,
+              duration: 450,
+              easing: Easing.inOut(Easing.quad),
+              useNativeDriver: true,
+            }),
+          ])
+        )
+      );
+      animations.forEach((anim) => anim.start());
+      return () => {
+        animations.forEach((anim) => (anim as any).stop && (anim as any).stop());
+        animatedValues.forEach((v) => v.setValue(0));
+      };
+    }, [animatedValues, text]);
+
+    return (
+      <ThemedView style={{ flexDirection: 'row' }}>
+        {letters.map((char, index) => {
+          const translateY = animatedValues[index].interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, -1],
+          });
+          const opacity = animatedValues[index].interpolate({
+            inputRange: [0, 1],
+            outputRange: [0.85, 1],
+          });
+          return (
+            <Animated.Text
+              key={`${char}-${index}`}
+              style={[styles.typingDots, { transform: [{ translateY }], opacity }]}
+            >
+              {char}
+            </Animated.Text>
+          );
+        })}
+      </ThemedView>
+    );
+  };
+
   return (
     <ThemedView style={styles.container}>
       {/* Header */}
@@ -161,7 +206,11 @@ export default function MamboAIScreen() {
               <ThemedView style={styles.aiMessageContainer}>
                 <ThemedView style={styles.messageContent}>
                   <ThemedView style={styles.aiAvatar}>
-                    <IconSymbol name="bolt.fill" size={20} color="#FF0000" />
+                    <Image
+                      source={require('../../assets/images/z-alertlogo.png')}
+                      style={styles.aiAvatarImage}
+                      resizeMode="cover"
+                    />
                   </ThemedView>
                   <ThemedView style={styles.aiBubble}>
                     <ThemedText style={styles.messageText}>{message.text}</ThemedText>
@@ -171,6 +220,26 @@ export default function MamboAIScreen() {
             )}
           </ThemedView>
         ))}
+
+        {/* AI typing indicator (ChatGPT-like) */}
+        {isLoading && (
+          <ThemedView style={styles.messageContainer}>
+            <ThemedView style={styles.aiMessageContainer}>
+              <ThemedView style={styles.messageContent}>
+                <ThemedView style={styles.aiAvatar}>
+                  <Image
+                    source={require('../../assets/images/z-alertlogo.png')}
+                    style={styles.aiAvatarImage}
+                    resizeMode="cover"
+                  />
+                </ThemedView>
+                <ThemedView style={styles.aiThinkingContainer}>
+                  <ThinkingWave text="Thinking" />
+                </ThemedView>
+              </ThemedView>
+            </ThemedView>
+          </ThemedView>
+        )}
       </ScrollView>
 
       {/* Input Bar with Keyboard Avoidance */}
@@ -210,6 +279,7 @@ export default function MamboAIScreen() {
   );
 }
 
+// Styles AI Chat
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -219,12 +289,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingTop: 50,
+    paddingTop: 60,
     paddingBottom: 10,
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
     borderBottomColor: '#E5E5E5',
-    height: 85,
+    height: 95,
   },
   backButton: {
     padding: 8,
@@ -237,6 +307,7 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: 'center',
     justifyContent: 'center',
+    top: 32,
   },
   headerTitle: {
     fontSize: 24,
@@ -246,7 +317,6 @@ const styles = StyleSheet.create({
   headerSubtitle: {
     fontSize: 14,
     color: '#999',
-    marginTop: 2,
   },
   chatArea: {
     flex: 1,
@@ -275,15 +345,20 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   aiAvatar: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    backgroundColor: '#FFE4E6',
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#FFB6C1',
+    borderColor: '#E5E7EB',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
+  },
+  aiAvatarImage: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
   },
   userBubble: {
     backgroundColor: '#E5E5E5',
@@ -296,17 +371,33 @@ const styles = StyleSheet.create({
   },
   aiBubble: {
     backgroundColor: '#FFE4E6',
-    borderRadius: 18,
-    paddingHorizontal: 18,
-    paddingVertical: 15,
-    maxWidth: '80%',
+    borderRadius: 14,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    maxWidth: '85%',
     borderBottomLeftRadius: 4,
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: '#FFE4E6',
+    shadowColor: '#000000',
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 1,
+  },
+  aiThinkingContainer: {
+    maxWidth: '85%',
     marginRight: 10,
   },
   messageText: {
     fontSize: 16,
     color: '#000',
     lineHeight: 20,
+  },
+  typingDots: {
+    fontSize: 16,
+    color: '#6B7280',
+    letterSpacing: 2,
   },
   inputContainer: {
     paddingHorizontal: 20,

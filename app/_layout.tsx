@@ -20,7 +20,18 @@ export default function RootLayout() {
         <Stack.Screen name="police" options={{ 
           headerShown: false,
           presentation: 'card',
-          animation: 'slide_from_right'
+        }} />
+        <Stack.Screen name="fire" options={{ 
+          headerShown: false,
+          presentation: 'card',
+        }} />
+        <Stack.Screen name="medical" options={{ 
+          headerShown: false,
+          presentation: 'card',
+        }} />
+        <Stack.Screen name="rescue" options={{ 
+          headerShown: false,
+          presentation: 'card',
         }} />
       </Stack>
       <StatusBar style="auto" />
