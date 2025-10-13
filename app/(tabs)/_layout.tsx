@@ -1,5 +1,6 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
+import { Image } from 'react-native';
 
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
@@ -45,10 +46,13 @@ export default function TabLayout() {
         options={{
           title: 'Mambo AI',
           tabBarIcon: ({ color, focused }) => (
-            <IconSymbol 
-              size={24} 
-              name={focused ? "bolt.fill" : "bolt"} 
-              color={color} 
+            <Image 
+              source={require('@/assets/images/z-alertlogo.png')}
+              style={{
+                width: 35,
+                height: 35,
+              }}
+              resizeMode="contain"
             />
           ),
         }}
@@ -67,13 +71,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="profile"
         options={{
-          title: 'Settings',
+          title: 'Profile',
           tabBarIcon: ({ color, focused }) => (
             <IconSymbol 
               size={24} 
-              name={focused ? "gearshape.fill" : "gearshape"} 
+              name="person.circle" 
               color={color} 
             />
           ),

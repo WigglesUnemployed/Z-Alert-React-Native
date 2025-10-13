@@ -2,16 +2,21 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Link } from 'expo-router';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
       {/* Header */}
       <ThemedView style={styles.header}>
-        <TouchableOpacity style={styles.headerIcon}>
-          <IconSymbol name="person.circle" size={24} color="#000" />
-        </TouchableOpacity>
+        <ThemedView style={styles.logoContainer}>
+          <Image 
+            source={require('@/assets/images/z-alertlogo.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <ThemedText style={styles.logoText}>Alert</ThemedText>
+        </ThemedView>
         <TouchableOpacity style={styles.headerIcon}>
           <IconSymbol name="magnifyingglass" size={24} color="#000" />
         </TouchableOpacity>
@@ -34,45 +39,41 @@ export default function HomeScreen() {
           {/* Police Button */}
           <Link href="/police" asChild>
             <TouchableOpacity style={styles.emergencyButton}>
-              <ThemedView style={styles.buttonIcon}>
-                <IconSymbol name="shield" size={32} color="#FF0000" />
-              </ThemedView>
+              <IconSymbol name="shield" size={32} color="#FF0000" style={styles.buttonIcon} />
               <ThemedText style={styles.buttonText}>Police</ThemedText>
             </TouchableOpacity>
           </Link>
 
           {/* Fire Button */}
-          <TouchableOpacity style={styles.emergencyButton} onPress={() => alert('Fire department contacted')}>
-            <ThemedView style={styles.buttonIcon}>
-              <IconSymbol name="flame" size={32} color="#FF6600" />
-            </ThemedView>
-            <ThemedText style={styles.buttonText}>Fire</ThemedText>
-          </TouchableOpacity>
+          <Link href="/fire" asChild>
+            <TouchableOpacity style={styles.emergencyButton}>
+              <IconSymbol name="flame" size={32} color="#FF6600" style={styles.buttonIcon} />
+              <ThemedText style={styles.buttonText}>Fire</ThemedText>
+            </TouchableOpacity>
+          </Link>
 
           {/* Medical Button */}
-          <TouchableOpacity style={styles.emergencyButton} onPress={() => alert('Medical services contacted')}>
-            <ThemedView style={styles.buttonIcon}>
-              <IconSymbol name="cross.case" size={32} color="#0066FF" />
-            </ThemedView>
-            <ThemedText style={styles.buttonText}>Medical</ThemedText>
-          </TouchableOpacity>
+          <Link href="/medical" asChild>
+            <TouchableOpacity style={styles.emergencyButton}>
+              <IconSymbol name="cross.case" size={32} color="#0066FF" style={styles.buttonIcon} />
+              <ThemedText style={styles.buttonText}>Medical</ThemedText>
+            </TouchableOpacity>
+          </Link>
 
           {/* Rescue Button */}
-          <TouchableOpacity style={styles.emergencyButton} onPress={() => alert('Rescue services contacted')}>
-            <ThemedView style={styles.buttonIcon}>
-              <IconSymbol name="figure.walk" size={32} color="#006600" />
-            </ThemedView>
-            <ThemedText style={styles.buttonText}>Rescue</ThemedText>
-          </TouchableOpacity>
+          <Link href="/rescue" asChild>
+            <TouchableOpacity style={styles.emergencyButton}>
+              <IconSymbol name="figure.walk" size={32} color="#006600" style={styles.buttonIcon} />
+              <ThemedText style={styles.buttonText}>Rescue</ThemedText>
+            </TouchableOpacity>
+          </Link>
         </ThemedView>
       </ThemedView>
 
       {/* Categories Button */}
       <ThemedView style={styles.categoriesContainer}>
         <TouchableOpacity style={styles.categoriesButton} onPress={() => alert('Categories opened')}>
-          <ThemedView style={styles.categoriesIcon}>
-            <IconSymbol name="folder" size={24} color="#000" />
-          </ThemedView>
+          <IconSymbol name="folder" size={24} color="#000" style={styles.categoriesIcon} />
           <ThemedText style={styles.categoriesText}>Categories</ThemedText>
         </TouchableOpacity>
       </ThemedView>
@@ -80,7 +81,7 @@ export default function HomeScreen() {
     </ThemedView>
   );
 }
-
+          {/* Container styles */}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -90,12 +91,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+
     paddingHorizontal: 20,
-    paddingTop: 50,
+    paddingTop: 30,
     paddingBottom: 20,
   },
   headerIcon: {
-    padding: 10,
+    padding: 1,
+  },
+  logoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 1,
+    paddingLeft: 115,
+  },
+  logo: {
+    width: 50,
+    height: 50,
+  },
+  logoText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#000000',
+    marginTop: 5,
+    marginLeft: -5 ,
   },
   titleContainer: {
     alignItems: 'center',

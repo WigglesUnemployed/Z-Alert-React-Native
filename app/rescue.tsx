@@ -4,52 +4,52 @@ import { IconSymbol } from '@/components/ui/icon-symbol';
 import { router } from 'expo-router';
 import { Linking, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function PoliceScreen() {
-  const policeStations = [
+export default function RescueScreen() {
+  const rescueServices = [
     {
       location: 'Subic',
-      stations: [
-        { name: 'Subic Police Station (Baraca Camachile)', phone: '(047) 232-2600' },
-        { name: 'Subic Municipal Police Station', phone: '0998-598-5503' },
+      services: [
+        { name: 'Subic Rescue Unit', phone: '(047) 232-1234' },
+        { name: 'Subic Emergency Response Team', phone: '0999-111-2222' },
+        { name: 'Subic Disaster Response', phone: '0999-333-4444' },
       ]
     },
-
     {
-     location: 'Oloangapo',
-     stations: [
-      { name: 'Ocpo', phone: '0998-598-5546' },
-      { name: 'Olongapo Station 1', phone: '0998-598-5503' },
-      { name: 'Olongapo Station 2', phone: '0998-598-5503' },
-      { name: 'Olongapo Station 3', phone: '0998-598-5503' },
-     ]
+      location: 'Olongapo',
+      services: [
+        { name: 'Olongapo City Rescue Unit', phone: '(047) 222-1234' },
+        { name: 'Olongapo Emergency Response', phone: '0999-555-6666' },
+        { name: 'Olongapo Disaster Management', phone: '0999-777-8888' },
+      ]
     },
     {
       location: 'Castillejos',
-      stations: [
-        { name: 'Castillejos Municipal Police Station', phone: '0998-598-5504' },
-        { name: 'Castillejos Police Force', phone: '(047) 602-2394' },
+      services: [
+        { name: 'Castillejos Rescue Unit', phone: '(047) 602-5678' },
+        { name: 'Castillejos Emergency Response', phone: '0999-999-0000' },
       ]
     },
     {
       location: 'San Marcelino',
-      stations: [
-        { name: 'San Marcelino Municipal Police Station', phone: '0947-890-1713' },
-
+      services: [
+        { name: 'San Marcelino Rescue Unit', phone: '0947-890-1714' },
+        { name: 'San Marcelino Emergency Response', phone: '0947-890-1715' },
       ]
     },
     {
       location: 'San Antonio',
-      stations: [
-        { name: 'San Antonio Municipal Police Station', phone: '0947-330-9197' },
+      services: [
+        { name: 'San Antonio Rescue Unit', phone: '0947-330-9198' },
+        { name: 'San Antonio Emergency Response', phone: '0947-330-9199' },
       ]
     },
     {
       location: 'San Narciso',
-      stations: [
-        { name: 'San Antonio Municipal Police Station', phone: '0947-330-9197' },
+      services: [
+        { name: 'San Narciso Rescue Unit', phone: '0947-330-9200' },
+        { name: 'San Narciso Emergency Response', phone: '0947-330-9201' },
       ]
     },
-
   ];
 
   const handleCall = (phoneNumber: string) => {
@@ -69,7 +69,7 @@ export default function PoliceScreen() {
         </TouchableOpacity>
         
         <ThemedText type="title" style={styles.headerTitle}>
-          Police Assistance
+          Rescue Assistance
         </ThemedText>
         
         <TouchableOpacity style={styles.searchButton}>
@@ -77,25 +77,25 @@ export default function PoliceScreen() {
         </TouchableOpacity>
       </ThemedView>
 
-      {/* Station List */}
+      {/* Service List */}
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {policeStations.map((location, locationIndex) => (
+        {rescueServices.map((location, locationIndex) => (
           <ThemedView key={locationIndex} style={styles.locationSection}>
             {/* Location Header */}
             <ThemedView style={styles.locationHeader}>
               <ThemedText style={styles.locationTitle}>{location.location}</ThemedText>
             </ThemedView>
             
-            {/* Stations */}
-            {location.stations.map((station, stationIndex) => (
+            {/* Services */}
+            {location.services.map((service, serviceIndex) => (
               <TouchableOpacity
-                key={stationIndex}
-                style={styles.stationItem}
-                onPress={() => handleCall(station.phone)}
+                key={serviceIndex}
+                style={styles.serviceItem}
+                onPress={() => handleCall(service.phone)}
               >
-                <ThemedView style={styles.stationInfo}>
-                  <ThemedText style={styles.stationName}>{station.name}</ThemedText>
-                  <ThemedText style={styles.stationPhone}>{station.phone}</ThemedText>
+                <ThemedView style={styles.serviceInfo}>
+                  <ThemedText style={styles.serviceName}>{service.name}</ThemedText>
+                  <ThemedText style={styles.servicePhone}>{service.phone}</ThemedText>
                 </ThemedView>
                 <IconSymbol name="chevron.right" size={20} color="#999" />
               </TouchableOpacity>
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   locationHeader: {
-    backgroundColor: '#FFD5D5',
+    backgroundColor: '#E6FFE6',
     paddingHorizontal: 20,
     paddingVertical: 12,
   },
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#000',
   },
-  stationItem: {
+  serviceItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -175,15 +175,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
   },
-  stationInfo: {
+  serviceInfo: {
     flex: 1,
   },
-  stationName: {
+  serviceName: {
     fontSize: 16,
     color: '#666',
     marginBottom: 4,
   },
-  stationPhone: {
+  servicePhone: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#000',
