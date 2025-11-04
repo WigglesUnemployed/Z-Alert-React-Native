@@ -5,37 +5,110 @@ import { router } from 'expo-router';
 import { Linking, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function FireScreen() {
+ 
   const fireDepartments = [
     {
       location: 'Subic',
       departments: [
-        { name: 'Subic Fire Station (BFP)', phone: '(047) 232-1234' },
-        { name: 'BFP Subic', phone: '0999-111-2222' },
+        { name: 'Subic Police Station (Baraca Camachile)', phone: '(047) 232-2600' },
+        { name: 'Subic Municipal Police Station', phone: '0998-598-5503' },
       ]
+    },
+
+    {
+     location: 'Olongapo',
+     departments: [
+      { name: 'OCPO (Barretto, Camp LT. Gen. Cabal)', phone: '0998-598-5546' },
+      { name: 'Olongapo Station 1 (City Hall, Rizal Avenue)', phone: '0998-598-5547' },
+      { name: 'Olongapo Station 2 (Poster St., New Kababae)', phone: '0998-598-5549' },
+      { name: 'Olongapo Station 3 (Magsaysay Drive)', phone: '0998-598-5561' },
+      { name: 'Olongapo Station 4 (Rizal St, New Cabalan)', phone: '0998-598-5563' },
+      { name: 'Olongapo Station 5 (Sta. Rita, Olongapo City)', phone: '0998-598-5567' },
+      { name: 'Olongapo Station 6 (Iloilo St, Barretto,)', phone: '0998-598-5569' },
+     ]
     },
     {
       location: 'Castillejos',
       departments: [
-        { name: 'Castillejos Fire Station (BFP)', phone: '(047) 602-5678' },
-        { name: 'BFP Castillejos', phone: '0999-333-4444' },
+        { name: 'Castillejos Municipal Police Station', phone: '0998-598-5504' },
+        { name: 'Castillejos Police Force', phone: '(047) 602-2394' },
       ]
     },
     {
       location: 'San Marcelino',
       departments: [
-        { name: 'San Marcelino Fire Station (BFP)', phone: '0947-890-1714' },
+        { name: 'San Marcelino Municipal Police Station', phone: '0947-890-1713' },
+
       ]
     },
     {
       location: 'San Antonio',
       departments: [
-        { name: 'San Antonio Fire Station (BFP)', phone: '0947-330-9198' },
+        { name: 'San Antonio PS', phone: '0998 - 598 - 5507' },
+        { name: 'San Antonio Municipal WCPD', phone: '0968 - 390 - 7169 ' },
       ]
     },
     {
       location: 'San Narciso',
       departments: [
-        { name: 'San Narciso Fire Station (BFP)', phone: '0947-330-9199' },
+        { name: 'San Narciso MPS', phone: '0998 - 598 - 5508' },
+      ]
+    },
+
+    {
+      location: 'San Felipe',
+      departments: [
+        { name: 'San Felipe MPS', phone: '0998 - 598 - 5509' },
+      ]
+    },
+
+    {
+      location: 'Cabangan',
+      departments: [
+        { name: 'Cabangan MPS', phone: '0998 - 598 - 5510' },
+      ]
+    },
+
+    {
+      location: 'Botolan',
+      departments: [
+        { name: 'Botolam Municipal Police Statation', phone: '0998 - 598 - 5512' },
+      ]
+    },
+
+    {
+      location: 'Iba',
+      departments: [
+        { name: 'Iba MPS', phone: '0998 - 598 - 5513' },
+      ]
+    },
+
+    {
+      location: 'Paluig',
+      departments: [
+        { name: 'Paluig MPS ', phone: '0998 - 598 - 5514' },
+      ]
+    },
+
+    {
+      location: 'Masinloc',
+      departments: [
+        { name: 'Masinloc MPS', phone: '0998 - 598 - 5516' },
+        { name: 'Masinloc PS', phone: '0908-869-7905' },
+      ]
+    },
+
+    {
+      location: 'Candeleria',
+      departments: [
+        { name: 'Candelaria Police Station', phone: '0998 - 598 - 5517' },
+      ]
+    },
+
+    {
+      location: 'Santa Cruz',
+      departments: [
+        { name: 'Santa Cruz MPS', phone: '0998 - 598 - 5517 ' },
       ]
     },
   ];

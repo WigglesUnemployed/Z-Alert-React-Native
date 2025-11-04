@@ -207,7 +207,7 @@ export default function MamboAIScreen() {
                 <ThemedView style={styles.messageContent}>
                   <ThemedView style={styles.aiAvatar}>
                     <Image
-                      source={require('../../assets/images/z-alertlogo.png')}
+                      source={require('../../assets/images/Mlogo.png')}
                       style={styles.aiAvatarImage}
                       resizeMode="cover"
                     />
