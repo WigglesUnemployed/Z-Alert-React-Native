@@ -6,7 +6,7 @@ import { useUser } from '@/contexts/UserContext';
 import NotificationService from '@/services/NotificationService';
 import { Link, router } from 'expo-router';
 import { useEffect, useRef } from 'react';
-import { Alert, Animated, Image, Linking, StyleSheet, TouchableOpacity } from 'react-native';
+import { Alert, Animated, Image, Linking, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
   const { userProfile, clearUserData } = useUser();
@@ -158,132 +158,142 @@ export default function HomeScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      {/* Header */}
-      <ThemedView style={styles.header}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        bounces={true}
+        alwaysBounceVertical={true}
+      >
+        {/* Header */}
+        <ThemedView style={styles.header}>
+          <Animated.View style={[
+            styles.logoContainer,
+            {
+              opacity: logoOpacity,
+              transform: [{ scale: logoScale }]
+            }
+          ]}>
+            <Image 
+              source={require('@/assets/images/z-alertlogo.png')}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </Animated.View>
+          <TouchableOpacity style={styles.headerIcon} onPress={handleSearchPress}>
+            <IconSymbol name="magnifyingglass" size={24} color="#000"/>
+          </TouchableOpacity>
+
+        </ThemedView>
+
+        {/* Location Info */}
+        {userProfile && (
+          <Animated.View style={[
+            styles.locationInfo,
+            {
+              opacity: locationOpacity,
+              transform: [{ translateY: locationTranslateY }]
+            }
+          ]}>
+            <ThemedText style={styles.locationText}>
+              📍 {userProfile.municipality}, {userProfile.barangay}
+            </ThemedText>
+          </Animated.View>
+        )}
+
+        {/* Main Question */}
         <Animated.View style={[
-          styles.logoContainer,
+          styles.titleContainer,
           {
-            opacity: logoOpacity,
-            transform: [{ scale: logoScale }]
+            opacity: titleOpacity,
+            transform: [{ translateY: titleTranslateY }]
           }
         ]}>
-          <Image 
-            source={require('@/assets/images/z-alertlogo.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        </Animated.View>
-        <TouchableOpacity style={styles.headerIcon} onPress={handleSearchPress}>
-          <IconSymbol name="magnifyingglass" size={24} color="#000"/>
-        </TouchableOpacity>
-
-      </ThemedView>
-
-      {/* Location Info */}
-      {userProfile && (
-        <Animated.View style={[
-          styles.locationInfo,
-          {
-            opacity: locationOpacity,
-            transform: [{ translateY: locationTranslateY }]
-          }
-        ]}>
-          <ThemedText style={styles.locationText}>
-            📍 {userProfile.municipality}, {userProfile.barangay}
+          <ThemedText type="title" style={styles.mainTitle}>
+            What is your emergency?
           </ThemedText>
         </Animated.View>
-      )}
 
-      {/* Main Question */}
-      <Animated.View style={[
-        styles.titleContainer,
-        {
-          opacity: titleOpacity,
-          transform: [{ translateY: titleTranslateY }]
-        }
-      ]}>
-        <ThemedText type="title" style={styles.mainTitle}>
-          What is your emergency?
-        </ThemedText>
-      </Animated.View>
+        {/* Assistance Section */}
+        <ThemedView style={styles.assistanceContainer}>
+          <Animated.Text style={[
+            styles.sectionTitle,
+            { opacity: sectionTitleOpacity }
+          ]}>
+            Assistance
+          </Animated.Text>
+          
+          <Animated.View style={[
+            styles.buttonsGrid,
+            {
+              opacity: buttonsOpacity,
+              transform: [{ translateY: buttonsTranslateY }]
+            }
+          ]}>
+            {/* Police Button */}
+            <Link href="/police" asChild>
+              <TouchableOpacity style={styles.emergencyButton}>
+                <IconSymbol name="shield" size={32} color="#FF0000" style={styles.buttonIcon} />
+                <ThemedText style={styles.buttonText}>Police</ThemedText>
+              </TouchableOpacity>
+            </Link>
 
-      {/* Assistance Section */}
-      <ThemedView style={styles.assistanceContainer}>
-        <Animated.Text style={[
-          styles.sectionTitle,
-          { opacity: sectionTitleOpacity }
-        ]}>
-          Assistance
-        </Animated.Text>
-        
+            {/* Fire Button */}
+            <Link href="/fire" asChild>
+              <TouchableOpacity style={styles.emergencyButton}>
+                <IconSymbol name="flame" size={32} color="#FF6600" style={styles.buttonIcon} />
+                <ThemedText style={styles.buttonText}>Fire</ThemedText>
+              </TouchableOpacity>
+            </Link>
+
+            {/* Medical Button */}
+            <Link href="/medical" asChild>
+              <TouchableOpacity style={styles.emergencyButton}>
+                <IconSymbol name="cross.case" size={32} color="#0066FF" style={styles.buttonIcon} />
+                <ThemedText style={styles.buttonText}>Medical</ThemedText>
+              </TouchableOpacity>
+            </Link>
+
+            {/* Rescue Button */}
+            <Link href="/rescue" asChild>
+              <TouchableOpacity style={styles.emergencyButton}>
+                <IconSymbol name="figure.walk" size={32} color="#006600" style={styles.buttonIcon} />
+                <ThemedText style={styles.buttonText}>Rescue</ThemedText>
+              </TouchableOpacity>
+            </Link>
+          </Animated.View>
+        </ThemedView>
+
+        {/* Call 911 Button */}
         <Animated.View style={[
-          styles.buttonsGrid,
+          styles.categoriesContainer,
           {
-            opacity: buttonsOpacity,
-            transform: [{ translateY: buttonsTranslateY }]
+            opacity: call911Opacity,
+            transform: [{ translateY: call911TranslateY }]
           }
         ]}>
-          {/* Police Button */}
-          <Link href="/police" asChild>
-            <TouchableOpacity style={styles.emergencyButton}>
-              <IconSymbol name="shield" size={32} color="#FF0000" style={styles.buttonIcon} />
-              <ThemedText style={styles.buttonText}>Police</ThemedText>
-            </TouchableOpacity>
-          </Link>
-
-          {/* Fire Button */}
-          <Link href="/fire" asChild>
-            <TouchableOpacity style={styles.emergencyButton}>
-              <IconSymbol name="flame" size={32} color="#FF6600" style={styles.buttonIcon} />
-              <ThemedText style={styles.buttonText}>Fire</ThemedText>
-            </TouchableOpacity>
-          </Link>
-
-          {/* Medical Button */}
-          <Link href="/medical" asChild>
-            <TouchableOpacity style={styles.emergencyButton}>
-              <IconSymbol name="cross.case" size={32} color="#0066FF" style={styles.buttonIcon} />
-              <ThemedText style={styles.buttonText}>Medical</ThemedText>
-            </TouchableOpacity>
-          </Link>
-
-          {/* Rescue Button */}
-          <Link href="/rescue" asChild>
-            <TouchableOpacity style={styles.emergencyButton}>
-              <IconSymbol name="figure.walk" size={32} color="#006600" style={styles.buttonIcon} />
-              <ThemedText style={styles.buttonText}>Rescue</ThemedText>
-            </TouchableOpacity>
-          </Link>
+          <TouchableOpacity style={styles.categoriesButton} onPress={handleCall911}>
+            <IconSymbol name="phone.fill" size={24} color="#FF0000" style={styles.categoriesIcon} />
+            <ThemedText style={styles.categoriesText}>Call 911</ThemedText>
+          </TouchableOpacity>
         </Animated.View>
-      </ThemedView>
 
-      {/* Call 911 Button */}
-      <Animated.View style={[
-        styles.categoriesContainer,
-        {
-          opacity: call911Opacity,
-          transform: [{ translateY: call911TranslateY }]
-        }
-      ]}>
-        <TouchableOpacity style={styles.categoriesButton} onPress={handleCall911}>
-          <IconSymbol name="phone.fill" size={24} color="#FF0000" style={styles.categoriesIcon} />
-          <ThemedText style={styles.categoriesText}>Call 911</ThemedText>
-        </TouchableOpacity>
-      </Animated.View>
+        {/* Test Buttons */}
+        <ThemedView style={styles.testContainer}>
+          <TouchableOpacity style={styles.testButton} onPress={handleTestNotification}>
+            <IconSymbol name="bell" size={20} color="#FF6600" style={styles.testIcon} />
+            <ThemedText style={styles.testText}>Test Notifications</ThemedText>
+          </TouchableOpacity>
+          
+          <TouchableOpacity style={styles.testButton} onPress={handleClearData}>
+            <IconSymbol name="trash" size={20} color="#FF0000" style={styles.testIcon} />
+            <ThemedText style={styles.testText}>Clear App Data</ThemedText>
+          </TouchableOpacity>
+        </ThemedView>
 
-      {/* Test Buttons */}
-      <ThemedView style={styles.testContainer}>
-        <TouchableOpacity style={styles.testButton} onPress={handleTestNotification}>
-          <IconSymbol name="bell" size={20} color="#FF6600" style={styles.testIcon} />
-          <ThemedText style={styles.testText}>Test Notifications</ThemedText>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.testButton} onPress={handleClearData}>
-          <IconSymbol name="trash" size={20} color="#FF0000" style={styles.testIcon} />
-          <ThemedText style={styles.testText}>Clear App Data</ThemedText>
-        </TouchableOpacity>
-      </ThemedView>
-
+        {/* Extra padding for bounce effect */}
+        <View style={styles.bottomPadding} />
+      </ScrollView>
     </ThemedView>
   );
 }
@@ -292,6 +302,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  bottomPadding: {
+    height: 100,
   },
   header: {
     flexDirection: 'row',
@@ -362,7 +381,7 @@ const styles = StyleSheet.create({
   },
   categoriesContainer: {
     paddingHorizontal: 20,
-    marginBottom: 50,
+    marginBottom: 30,
   },
   categoriesButton: {
     backgroundColor: '#ED1C24',

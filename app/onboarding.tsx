@@ -400,6 +400,8 @@ export default function OnboardingScreen() {
     setProfile({ ...profile, municipality, barangay: '' });
     setAvailableBarangays(BARANGAYS[municipality as keyof typeof BARANGAYS] || []);
     setShowMunicipalityDropdown(false);
+    // Reset barangay dropdown state when municipality changes
+    setShowBarangayDropdown(false);
   };
 
   const handleBarangaySelect = (barangay: string) => {
@@ -429,8 +431,8 @@ export default function OnboardingScreen() {
       await AsyncStorage.setItem('userProfile', JSON.stringify(profile));
       await AsyncStorage.setItem('hasCompletedOnboarding', 'true');
       
-      // Navigate to main app
-      router.replace('/(tabs)');
+      // Navigate to tutorial
+      router.replace('/tutorial');
     } catch (error) {
       Alert.alert('Error', 'Failed to save profile. Please try again.');
       console.error('Error saving profile:', error);
@@ -440,7 +442,18 @@ export default function OnboardingScreen() {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" />
-      <View style={styles.contentContainer}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        bounces={true}
+        alwaysBounceVertical={true}
+        nestedScrollEnabled={true}
+        keyboardShouldPersistTaps="handled"
+      >
+        {/* Top padding for bounce effect */}
+        <View style={styles.topPadding} />
+
         {/* Header */}
         <View style={styles.header}>
           <Animated.View style={{
@@ -523,6 +536,7 @@ export default function OnboardingScreen() {
           <TouchableOpacity
             style={styles.dropdown}
             onPress={() => setShowMunicipalityDropdown(!showMunicipalityDropdown)}
+            activeOpacity={0.7}
           >
             <Text style={[styles.dropdownText, !profile.municipality && styles.placeholder]}>
               {profile.municipality || 'Select your municipality'}
@@ -539,6 +553,7 @@ export default function OnboardingScreen() {
                  style={styles.dropdownScrollView}
                  showsVerticalScrollIndicator={true}
                  nestedScrollEnabled={true}
+                 keyboardShouldPersistTaps="handled"
                >
                  {MUNICIPALITIES.map((municipality) => (
                    <TouchableOpacity
@@ -556,20 +571,33 @@ export default function OnboardingScreen() {
         </View>
 
         {/* Barangay Dropdown */}
-        <View style={styles.inputContainer}>
+        <View style={[styles.inputContainer, styles.barangayInputContainer]}>
           <Text style={styles.label}>Barangay</Text>
           <TouchableOpacity
-            style={[styles.dropdown, !profile.municipality && styles.disabledDropdown]}
-            onPress={() => profile.municipality && setShowBarangayDropdown(!showBarangayDropdown)}
-            disabled={!profile.municipality}
+            style={[styles.dropdown, (!profile.municipality || availableBarangays.length === 0) && styles.disabledDropdown]}
+            onPress={() => {
+              if (profile.municipality && availableBarangays.length > 0) {
+                setShowBarangayDropdown(!showBarangayDropdown);
+                // Close municipality dropdown if open
+                if (showMunicipalityDropdown) {
+                  setShowMunicipalityDropdown(false);
+                }
+              } else if (!profile.municipality) {
+                Alert.alert('Select Municipality First', 'Please select a municipality before selecting a barangay.');
+              } else if (availableBarangays.length === 0) {
+                Alert.alert('No Barangays', 'No barangays available for the selected municipality.');
+              }
+            }}
+            disabled={!profile.municipality || availableBarangays.length === 0}
+            activeOpacity={(profile.municipality && availableBarangays.length > 0) ? 0.7 : 1}
           >
-            <Text style={[styles.dropdownText, !profile.barangay && styles.placeholder]}>
+            <Text style={[styles.dropdownText, !profile.barangay && styles.placeholder, (!profile.municipality || availableBarangays.length === 0) && styles.disabledText]}>
               {profile.barangay || 'Select your barangay'}
             </Text>
             <IconSymbol 
               name={showBarangayDropdown ? "chevron.up" : "chevron.down"} 
               size={20} 
-              color="#666" 
+              color={(profile.municipality && availableBarangays.length > 0) ? "#666" : "#CCCCCC"} 
             />
           </TouchableOpacity>
            {showBarangayDropdown && availableBarangays.length > 0 && (
@@ -578,6 +606,7 @@ export default function OnboardingScreen() {
                  style={styles.dropdownScrollView}
                  showsVerticalScrollIndicator={true}
                  nestedScrollEnabled={true}
+                 keyboardShouldPersistTaps="handled"
                >
                  {availableBarangays.map((barangay) => (
                    <TouchableOpacity
@@ -605,7 +634,10 @@ export default function OnboardingScreen() {
             <IconSymbol name="arrow.right" size={20} color="#FFFFFF" />
           </TouchableOpacity>
         </Animated.View>
-      </View>
+
+        {/* Bottom padding for bounce effect */}
+        <View style={styles.bottomPadding} />
+      </ScrollView>
     </View>
   );
 }
@@ -615,16 +647,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  contentContainer: {
+  scrollView: {
     flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
     paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 30,
-    justifyContent: 'space-between',
+  },
+  topPadding: {
+    height: 50,
+  },
+  bottomPadding: {
+    height: 100,
   },
   header: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
     backgroundColor: '#0000',
     paddingHorizontal: 20,
     paddingTop: 25,
@@ -635,9 +673,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
-    elevation: 2 ,
-    marginHorizontal: -23,
-    marginVertical: -22 ,
+    elevation: 2,
+    marginHorizontal: -20,
+    marginTop: -20,
   },
   logo: {
     width: 60,
@@ -657,12 +695,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   form: {
-    flex: 1,
     marginBottom: 20,
   },
   inputContainer: {
     marginBottom: 12,
     position: 'relative',
+  },
+  barangayInputContainer: {
+    marginTop: 4,
+    zIndex: 10,
   },
   label: {
     fontSize: 16,
@@ -701,6 +742,9 @@ const styles = StyleSheet.create({
   placeholder: {
     color: '#999999',
   },
+  disabledText: {
+    color: '#CCCCCC',
+  },
   dropdownList: {
     position: 'absolute',
     top: '100%',
@@ -733,8 +777,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 4,
     maxHeight: 160,
-    zIndex: 1000,
-    elevation: 5,
+    zIndex: 2000,
+    elevation: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -763,7 +807,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20,
-    marginBottom: -8,
+    marginBottom: 20,
   },
   proceedButtonText: {
     color: '#FFFFFF',

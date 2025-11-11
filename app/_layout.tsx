@@ -17,8 +17,28 @@ export default function RootLayout() {
     <UserProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
-          <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen 
+            name="onboarding" 
+            options={{ 
+              headerShown: false,
+              gestureEnabled: false,
+            }} 
+          />
+          <Stack.Screen 
+            name="tutorial" 
+            options={{ 
+              headerShown: false,
+              gestureEnabled: false,
+            }} 
+          />
+          <Stack.Screen 
+            name="(tabs)" 
+            options={{ 
+              headerShown: false,
+              gestureEnabled: false,
+              fullScreenGestureEnabled: false,
+            }} 
+          />
           <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
           <Stack.Screen name="police" options={{ 
             headerShown: false,

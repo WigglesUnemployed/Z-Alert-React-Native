@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 export default function AppIndex() {
-  const { hasCompletedOnboarding, isLoading, userProfile } = useUser();
+  const { hasCompletedOnboarding, hasCompletedTutorial, isLoading, userProfile } = useUser();
 
   useEffect(() => {
     // Request notification permissions when app starts
@@ -23,13 +23,15 @@ export default function AppIndex() {
 
   useEffect(() => {
     if (!isLoading) {
-      if (hasCompletedOnboarding) {
-        router.replace('/(tabs)');
-      } else {
+      if (!hasCompletedOnboarding) {
         router.replace('/onboarding');
+      } else if (!hasCompletedTutorial) {
+        router.replace('/tutorial');
+      } else {
+        router.replace('/(tabs)');
       }
     }
-  }, [hasCompletedOnboarding, isLoading]);
+  }, [hasCompletedOnboarding, hasCompletedTutorial, isLoading]);
 
   if (isLoading) {
     return (

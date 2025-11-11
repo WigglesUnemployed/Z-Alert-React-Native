@@ -12,6 +12,7 @@ export interface UserProfile {
 interface UserContextType {
   userProfile: UserProfile | null;
   hasCompletedOnboarding: boolean;
+  hasCompletedTutorial: boolean;
   isLoading: boolean;
   updateUserProfile: (profile: UserProfile) => Promise<void>;
   clearUserData: () => Promise<void>;
@@ -27,6 +28,7 @@ interface UserProviderProps {
 export function UserProvider({ children }: UserProviderProps) {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
+  const [hasCompletedTutorial, setHasCompletedTutorial] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -41,6 +43,11 @@ export function UserProvider({ children }: UserProviderProps) {
       const onboardingStatus = await AsyncStorage.getItem('hasCompletedOnboarding');
       const completed = onboardingStatus === 'true';
       setHasCompletedOnboarding(completed);
+
+      // Check if user has completed tutorial
+      const tutorialStatus = await AsyncStorage.getItem('hasCompletedTutorial');
+      const tutorialCompleted = tutorialStatus === 'true';
+      setHasCompletedTutorial(tutorialCompleted);
 
       // Load user profile if onboarding is completed
       if (completed) {
@@ -73,8 +80,10 @@ export function UserProvider({ children }: UserProviderProps) {
     try {
       await AsyncStorage.removeItem('userProfile');
       await AsyncStorage.removeItem('hasCompletedOnboarding');
+      await AsyncStorage.removeItem('hasCompletedTutorial');
       setUserProfile(null);
       setHasCompletedOnboarding(false);
+      setHasCompletedTutorial(false);
     } catch (error) {
       console.error('Error clearing user data:', error);
       throw error;
@@ -89,6 +98,7 @@ export function UserProvider({ children }: UserProviderProps) {
   const value: UserContextType = {
     userProfile,
     hasCompletedOnboarding,
+    hasCompletedTutorial,
     isLoading,
     updateUserProfile,
     clearUserData,
