@@ -336,6 +336,7 @@ export default function OnboardingScreen() {
   const formTranslateY = useRef(new Animated.Value(30)).current;
   const buttonOpacity = useRef(new Animated.Value(0)).current;
   const buttonTranslateY = useRef(new Animated.Value(20)).current;
+  const buttonMarginTop = useRef(new Animated.Value(20)).current;
 
   // Start animations on mount
   useEffect(() => {
@@ -384,17 +385,27 @@ export default function OnboardingScreen() {
         Animated.timing(buttonOpacity, {
           toValue: 1,
           duration: 600,
-          useNativeDriver: true,
+          useNativeDriver: false,
         }),
         Animated.spring(buttonTranslateY, {
           toValue: 0,
           friction: 5,
           tension: 40,
-          useNativeDriver: true,
+          useNativeDriver: false,
         }),
       ]),
     ]).start();
   }, []);
+
+  // Animate button margin when dropdowns open/close
+  useEffect(() => {
+    const isAnyDropdownOpen = showSexDropdown || showMunicipalityDropdown || showBarangayDropdown;
+    Animated.timing(buttonMarginTop, {
+      toValue: isAnyDropdownOpen ? 280 : 20,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [showSexDropdown, showMunicipalityDropdown, showBarangayDropdown, buttonMarginTop]);
 
   const handleMunicipalitySelect = (municipality: string) => {
     setProfile({ ...profile, municipality, barangay: '' });
@@ -588,7 +599,6 @@ export default function OnboardingScreen() {
                 Alert.alert('No Barangays', 'No barangays available for the selected municipality.');
               }
             }}
-            disabled={!profile.municipality || availableBarangays.length === 0}
             activeOpacity={(profile.municipality && availableBarangays.length > 0) ? 0.7 : 1}
           >
             <Text style={[styles.dropdownText, !profile.barangay && styles.placeholder, (!profile.municipality || availableBarangays.length === 0) && styles.disabledText]}>
@@ -627,7 +637,8 @@ export default function OnboardingScreen() {
         {/* Proceed Button */}
         <Animated.View style={{
           opacity: buttonOpacity,
-          transform: [{ translateY: buttonTranslateY }]
+          transform: [{ translateY: buttonTranslateY }],
+          marginTop: buttonMarginTop,
         }}>
           <TouchableOpacity style={styles.proceedButton} onPress={handleProceed}>
             <Text style={styles.proceedButtonText}>Proceed</Text>
