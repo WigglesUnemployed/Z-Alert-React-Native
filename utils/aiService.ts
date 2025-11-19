@@ -188,7 +188,7 @@ export const AI_CONFIG = {
   GEMINI_API_KEY: '', // put if you use Gemini
   CLAUDE_API_KEY: '', // put if you use Claude
   GITHUB_MODELS_TOKEN: '', // your GitHub AI token here
-  DEFAULT_SERVICE: 'local', // change to 'local', 'openai', 'gemini', etc.
+  DEFAULT_SERVICE: 'github', // change to 'local', 'openai', 'gemini', etc.
 };
 
 // FACTORY FUNCTION

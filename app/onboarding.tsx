@@ -1,4 +1,6 @@
 import { IconSymbol } from '@/components/ui/icon-symbol';
+import { Colors } from '@/constants/theme';
+import { db, getNextUserId, saveUserDataToDocument } from '@/services/firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
@@ -13,6 +15,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  useColorScheme,
 } from 'react-native';
 
 interface UserProfile {
@@ -316,6 +319,9 @@ const BARANGAYS = {
 const SEX_OPTIONS = ['Male', 'Female', 'Other', 'Prefer not to say'];
 
 export default function OnboardingScreen() {
+  const colorScheme = useColorScheme();
+  const colors = colorScheme === 'dark' ? Colors.dark : Colors.light;
+  
   const [profile, setProfile] = useState<UserProfile>({
     age: '',
     sex: '',
@@ -441,18 +447,40 @@ export default function OnboardingScreen() {
       // Save user profile to AsyncStorage
       await AsyncStorage.setItem('userProfile', JSON.stringify(profile));
       await AsyncStorage.setItem('hasCompletedOnboarding', 'true');
+      console.log('✓ Saved to AsyncStorage');
+      
+      // Save user data to Firestore under the parent document
+      if (db) {
+        console.log('✓ Firestore db available, saving...');
+        const userId = await getNextUserId();
+        console.log('✓ Got userId:', userId);
+        
+        // Save to the parent document: vTMoPRr4fPMUrpjoRPNs
+        const docId = 'vTMoPRr4fPMUrpjoRPNs';
+        const userData = {
+          age: Number(profile.age),
+          sex: profile.sex,
+          municipality: profile.municipality,
+          barangay: profile.barangay,
+        };
+        
+        await saveUserDataToDocument(docId, userId, userData);
+        console.log('✓ Data saved to Firestore under document:', docId);
+      } else {
+        console.warn('⚠ Firestore db not initialized, skipping Firestore save');
+      }
       
       // Navigate to tutorial
       router.replace('/tutorial');
     } catch (error) {
       Alert.alert('Error', 'Failed to save profile. Please try again.');
-      console.error('Error saving profile:', error);
+      console.error('✗ Error saving profile:', error);
     }
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <StatusBar barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'} />
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
