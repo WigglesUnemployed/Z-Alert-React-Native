@@ -79,7 +79,7 @@ export default function PoliceScreen() {
     {
       location: 'Botolan',
       stations: [
-        { name: 'Botolam Municipal Police Statation', phone: '0998 - 598 - 5512' },
+        { name: 'Botolan Municipal Police Statation', phone: '0998 - 598 - 5512' },
       ]
     },
 

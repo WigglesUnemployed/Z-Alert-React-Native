@@ -5,53 +5,115 @@ import { router } from 'expo-router';
 import { Linking, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function RescueScreen() {
+  
   const rescueServices = [
+   
+    {
+      location: 'Zambales',
+      services: [
+        { name: 'Zambales PDRRMO', phone: '0920 627 3253'},
+      ]
+    },
+   
     {
       location: 'Subic',
       services: [
-        { name: 'Subic Rescue Unit', phone: '(047) 232-1234' },
-        { name: 'Subic Emergency Response Team', phone: '0999-111-2222' },
-        { name: 'Subic Disaster Response', phone: '0999-333-4444' },
+        { name: 'Subic MDRRMO 1', phone: '0910 704 8306' },
+        { name: 'Subic MDRRMO 2', phone: '0981 460 4746' },
+        { name: 'Subic MDRRMO 3', phone: '0966 710 7968' },
       ]
     },
+
     {
-      location: 'Olongapo',
-      services: [
-        { name: 'Olongapo City Rescue Unit', phone: '(047) 222-1234' },
-        { name: 'Olongapo Emergency Response', phone: '0999-555-6666' },
-        { name: 'Olongapo Disaster Management', phone: '0999-777-8888' },
-      ]
+     location: 'Olongapo',
+     services: [
+      { name: 'Olongapo MDRRMO', phone: ' 0998 593 7446' },
+     ]
     },
     {
       location: 'Castillejos',
       services: [
-        { name: 'Castillejos Rescue Unit', phone: '(047) 602-5678' },
-        { name: 'Castillejos Emergency Response', phone: '0999-999-0000' },
+        { name: 'Castillejos Rescue', phone: '0961 452 2567 ' },
+
       ]
     },
     {
       location: 'San Marcelino',
       services: [
-        { name: 'San Marcelino Rescue Unit', phone: '0947-890-1714' },
-        { name: 'San Marcelino Emergency Response', phone: '0947-890-1715' },
+        { name: 'San Marcelino Rescue', phone: '0908  888 3776' },
+
       ]
     },
     {
       location: 'San Antonio',
       services: [
-        { name: 'San Antonio Rescue Unit', phone: '0947-330-9198' },
-        { name: 'San Antonio Emergency Response', phone: '0947-330-9199' },
+        { name: 'San Antonio Rescue', phone: '09286 711 0367' },
+      
       ]
     },
     {
       location: 'San Narciso',
       services: [
-        { name: 'San Narciso Rescue Unit', phone: '0947-330-9200' },
-        { name: 'San Narciso Emergency Response', phone: '0947-330-9201' },
+        { name: 'San Narciso Rescue', phone: '0950 856 2297' },
+      ]
+    },
+
+    {
+      location: 'San Felipe',
+      services: [
+        { name: 'San Felipe Rescue', phone: '0929 1838 441' },
+      ]
+    },
+
+    {
+      location: 'Cabangan',
+      services: [
+        { name: 'Cabangan Rescue', phone: '0909 053 5962' },
+      ]
+    },
+
+    {
+      location: 'Botolan',
+      services: [
+        { name: 'Botolan Rescue', phone: '0960 366 3737' },
+      ]
+    },
+
+    {
+      location: 'Iba',
+      services: [
+        { name: 'Iba Rescue', phone: '0998 4522 0023' },
+      ]
+    },
+
+    {
+      location: 'Paluig',
+      services: [
+        { name: 'Paluig Resuce ', phone: '0950 847 0545' },
+      ]
+    },
+
+    {
+      location: 'Masinloc',
+      services: [
+        { name: 'Masinloc Rescue', phone: '0921 405 9748' },
+      ]
+    },
+
+    {
+      location: 'Candeleria',
+      services: [
+        { name: 'Candelaria Rescue', phone: '0907 557 1570' },
+      ]
+    },
+
+    {
+      location: 'Santa Cruz',
+      services: [
+        { name: 'Santa Cruz Rescue', phone: '0967 490 8860' },
       ]
     },
   ];
-
   const handleCall = (phoneNumber: string) => {
     Linking.openURL(`tel:${phoneNumber}`);
   };

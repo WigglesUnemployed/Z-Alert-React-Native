@@ -10,105 +10,101 @@ export default function FireScreen() {
     {
       location: 'Subic',
       departments: [
-        { name: 'Subic Police Station (Baraca Camachile)', phone: '(047) 232-2600' },
-        { name: 'Subic Municipal Police Station', phone: '0998-598-5503' },
+        { name: 'Subic Fire Station (Baraca Camachile)', phone: '0999 366 7858 ' },
+        { name: 'Subic Fire Station 1', phone: '0927 698 3563' },
       ]
     },
 
     {
      location: 'Olongapo',
      departments: [
-      { name: 'OCPO (Barretto, Camp LT. Gen. Cabal)', phone: '0998-598-5546' },
-      { name: 'Olongapo Station 1 (City Hall, Rizal Avenue)', phone: '0998-598-5547' },
-      { name: 'Olongapo Station 2 (Poster St., New Kababae)', phone: '0998-598-5549' },
-      { name: 'Olongapo Station 3 (Magsaysay Drive)', phone: '0998-598-5561' },
-      { name: 'Olongapo Station 4 (Rizal St, New Cabalan)', phone: '0998-598-5563' },
-      { name: 'Olongapo Station 5 (Sta. Rita, Olongapo City)', phone: '0998-598-5567' },
-      { name: 'Olongapo Station 6 (Iloilo St, Barretto,)', phone: '0998-598-5569' },
+      { name: 'Olongapo fire search & rescue', phone: '(047) 2223-6876' }, 
+      { name: 'Olongapo Fire rescue 1 ' , phone: '09512 77 902' }, 
+      { name: 'Olongapo Fire rescue 2 ', phone: '0998 593 7446' }, 
+      
+
      ]
     },
     {
       location: 'Castillejos',
       departments: [
-        { name: 'Castillejos Municipal Police Station', phone: '0998-598-5504' },
-        { name: 'Castillejos Police Force', phone: '(047) 602-2394' },
+        { name: 'BFP R3 Castillejos Fire Station', phone: '0908 243 2825' },
       ]
     },
     {
       location: 'San Marcelino',
       departments: [
-        { name: 'San Marcelino Municipal Police Station', phone: '0947-890-1713' },
+        { name: 'San Marcelino Fire Station', phone: '0951 118 6269' },
 
       ]
     },
     {
       location: 'San Antonio',
       departments: [
-        { name: 'San Antonio PS', phone: '0998 - 598 - 5507' },
-        { name: 'San Antonio Municipal WCPD', phone: '0968 - 390 - 7169 ' },
+        { name: 'San Antonio PS', phone: '0960 819 3964' },
       ]
     },
     {
       location: 'San Narciso',
       departments: [
-        { name: 'San Narciso MPS', phone: '0998 - 598 - 5508' },
+        { name: 'San Narciso FS', phone: '0960 819 3964' },
       ]
     },
 
     {
       location: 'San Felipe',
       departments: [
-        { name: 'San Felipe MPS', phone: '0998 - 598 - 5509' },
+        { name: 'San Felipe FS', phone: '0960 819 3964' },
       ]
     },
 
     {
       location: 'Cabangan',
       departments: [
-        { name: 'Cabangan MPS', phone: '0998 - 598 - 5510' },
+        { name: 'Cabangan FS', phone: '0915 066 8593' },
       ]
     },
 
     {
       location: 'Botolan',
       departments: [
-        { name: 'Botolam Municipal Police Statation', phone: '0998 - 598 - 5512' },
+        { name: 'Botolan FS', phone: '0908 941 2913' },
       ]
     },
 
     {
       location: 'Iba',
       departments: [
-        { name: 'Iba MPS', phone: '0998 - 598 - 5513' },
+        { name: 'Iba FS', phone: '0999 177 7660' },
       ]
     },
 
     {
       location: 'Paluig',
       departments: [
-        { name: 'Paluig MPS ', phone: '0998 - 598 - 5514' },
+        { name: 'Paluig FS ', phone: '0999 177 7660' },
       ]
     },
 
     {
       location: 'Masinloc',
       departments: [
-        { name: 'Masinloc MPS', phone: '0998 - 598 - 5516' },
-        { name: 'Masinloc PS', phone: '0908-869-7905' },
+        { name: 'Masinloc FS', phone: '0961 460 0793' },
       ]
     },
 
     {
       location: 'Candeleria',
       departments: [
-        { name: 'Candelaria Police Station', phone: '0998 - 598 - 5517' },
+        { name: 'Candelaria FS 1', phone: '0961 460 5472' },
+        { name: 'Candelaria FS 2', phone: '0970 109 1468' },
       ]
     },
 
     {
       location: 'Santa Cruz',
       departments: [
-        { name: 'Santa Cruz MPS', phone: '0998 - 598 - 5517 ' },
+        { name: 'Santa Cruz FS', phone: '0975 788 3240 ' },
       ]
     },
   ];

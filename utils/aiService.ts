@@ -164,7 +164,7 @@ export class LocalAIService {
     default: [
       "I'm your safety assistant Mambo. How can I help you today?",
       "Need help with an emergency, safety tips, or local services?",
-      "Mambo here ΓÇö your safety is my priority. WhatΓÇÖs happening?"
+      "Mambo here — your safety is my priority. What's happening?"
     ]
   };
 
@@ -188,7 +188,7 @@ export const AI_CONFIG = {
   GEMINI_API_KEY: '', // put if you use Gemini
   CLAUDE_API_KEY: '', // put if you use Claude
   GITHUB_MODELS_TOKEN: '', // your GitHub AI token here
-  DEFAULT_SERVICE: 'local', // change to 'local', 'openai', 'gemini', etc.
+  DEFAULT_SERVICE: '', // change to 'local', 'openai', 'gemini', etc.
 };
 
 // FACTORY FUNCTION

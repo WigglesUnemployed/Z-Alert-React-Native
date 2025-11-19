@@ -5,49 +5,108 @@ import { router } from 'expo-router';
 import { Linking, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function MedicalScreen() {
+  
   const medicalServices = [
     {
       location: 'Subic',
       services: [
-        { name: 'Subic Medical Center', phone: '(047) 232-1234' },
-        { name: 'Subic General Hospital', phone: '0999-111-2222' },
-        { name: 'Subic Emergency Medical Services', phone: '0999-333-4444' },
+        { name: 'Subic Police Station (Baraca Camachile)', phone: '(047) 232-2600' },
+        { name: 'Subic Municipal Police Station', phone: '0998-598-5503' },
       ]
     },
+
     {
-      location: 'Olongapo',
-      services: [
-        { name: 'James L. Gordon Memorial Hospital', phone: '(047) 222-1234' },
-        { name: 'Olongapo City Medical Center', phone: '0999-555-6666' },
-        { name: 'Olongapo Emergency Response', phone: '0999-777-8888' },
-      ]
+     location: 'Olongapo',
+     services: [
+      { name: 'Baypointe', phone: '0939 915 7633' },
+      { name: 'ZMMG', phone: ' 0998 9190 965 ' },
+
+     ]
     },
     {
       location: 'Castillejos',
       services: [
-        { name: 'Castillejos Medical Center', phone: '(047) 602-5678' },
-        { name: 'Castillejos Emergency Services', phone: '0999-999-0000' },
+        { name: 'RHU Castillejos ', phone: '0938 190 2350' },
+  
       ]
     },
     {
       location: 'San Marcelino',
       services: [
-        { name: 'San Marcelino Medical Center', phone: '0947-890-1714' },
-        { name: 'San Marcelino Emergency Response', phone: '0947-890-1715' },
+        { name: 'ZMMG San Marcelino   ', phone: '0948 0387 573' },
+        { name: 'District Hospital San Marcelino ', phone: '(047) 602 2301' },
+
       ]
     },
     {
       location: 'San Antonio',
       services: [
-        { name: 'San Antonio Medical Center', phone: '0947-330-9198' },
-        { name: 'San Antonio Emergency Services', phone: '0947-330-9199' },
+        { name: 'San Antonio PS', phone: '0998 - 598 - 5507' },
+        { name: 'San Antonio Municipal WCPD', phone: '0968 - 390 - 7169 ' },
       ]
     },
     {
       location: 'San Narciso',
       services: [
-        { name: 'San Narciso Medical Center', phone: '0947-330-9200' },
-        { name: 'San Narciso Emergency Response', phone: '0947-330-9201' },
+        { name: 'San Narciso ', phone: '0947 330 2300' },
+      ]
+    },
+
+    {
+      location: 'San Felipe',
+      services: [
+        { name: 'San Felipe RHU', phone: '0931 793 8035 ' },
+      ]
+    },
+
+    {
+      location: 'Cabangan',
+      services: [
+        { name: 'Cabangan MPS', phone: '0998 - 598 - 5510' },
+      ]
+    },
+
+    {
+      location: 'Botolan',
+      services: [
+        { name: 'Botolan Municipal Police Statation', phone: '0998 - 598 - 5512' },
+      ]
+    },
+
+    {
+      location: 'Iba',
+      services: [
+        { name: 'Iba PRMMH 1', phone: '0943 134 2831' },
+        { name: 'Iba PRMMH 2', phone: '0933 860 2431' },
+      ]
+    },
+
+    {
+      location: 'Paluig',
+      services: [
+        { name: 'Paluig MPS ', phone: '0910 6555 567 ' },
+      ]
+    },
+
+    {
+      location: 'Masinloc',
+      services: [
+        { name: 'Masinloc MPS', phone: '0947 581 8397 ' },
+        { name: 'Masinloc PS', phone: '0908-869-7905' },
+      ]
+    },
+
+    {
+      location: 'Candeleria',
+      services: [
+        { name: 'Candelaria RHU  ', phone: '0920 274 7143 ' },
+      ]
+    },
+
+    {
+      location: 'Santa Cruz',
+      services: [
+        { name: 'Santa Cruz RHU', phone: '0906 887 8917 ' },
       ]
     },
   ];
@@ -108,7 +167,7 @@ export default function MedicalScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container: {                              
     flex: 1,
     backgroundColor: '#F5F5F5',
   },
